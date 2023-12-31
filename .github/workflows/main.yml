@@ -31,4 +31,16 @@ jobs:
                   file: ./Dockerfile
                   push: true
                   tags: ardhii/clockbox:latest
-                  
+            - # login ssh and deploying
+                name: login ssh and deploy
+                uses: appleboy/ssh-action@v1.0.1
+                with:
+                  host: ${{ secrets.HOST }}
+                  username: ${{ secrets.USERNAME }}
+                  password: ${{ secrets.PASSWORD }}
+                  port: ${{ secrets.PORT }}
+                  script: |
+                     cd /home/ardhi/CI-CD
+                     git pull origin main
+                     git status
+                     npm install --only=prod
